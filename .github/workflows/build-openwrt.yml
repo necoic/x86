@@ -17,7 +17,7 @@ on:
       ssh:
         description: 'SSH connection to Actions'
         required: false
-        default: 'false'
+        default: 'true'
 #  schedule:
 #    - cron: 0 8 * * 5
 
@@ -69,7 +69,13 @@ jobs:
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
-
+        
+    - name: argon theme
+      run: |
+        cd openwrt/lede/package/lean  
+        rm -rf luci-theme-argon  
+        git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+         
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
